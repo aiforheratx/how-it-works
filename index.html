@@ -73,7 +73,7 @@
   .who a:hover{color:var(--ink);border-color:var(--ink)}
   @media(max-width:960px){.nav-links{display:none}}
 
-  section{position:relative;z-index:1}
+  section{position:relative;z-index:1;scroll-margin-top:84px}
   /* content-visibility skips layout/paint (and animation paint cost) for
      offscreen sections — big win inside iframes/embeds */
   .band{padding:110px 0;content-visibility:auto;contain-intrinsic-size:auto 900px}
@@ -84,6 +84,7 @@
 
   /* ===== HERO ===== */
   .hero{min-height:100svh;display:flex;align-items:center;padding-top:70px;overflow:hidden}
+  @media(max-width:940px){.hero{padding-top:118px;align-items:flex-start}}
   .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center;width:100%}
   @media(max-width:940px){.hero-grid{grid-template-columns:1fr;gap:8px}}
   .hero h1{font-size:clamp(40px,7vw,84px);margin:20px 0 22px}
