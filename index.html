@@ -51,7 +51,9 @@
   @media(max-width:960px){.nav-links{display:none}}
 
   section{position:relative;z-index:1}
-  .band{padding:110px 0}
+  /* content-visibility skips layout/paint (and animation paint cost) for
+     offscreen sections — big win inside iframes/embeds */
+  .band{padding:110px 0;content-visibility:auto;contain-intrinsic-size:auto 900px}
   .sec-head{max-width:780px;margin-bottom:50px}
   .sec-head h2{font-size:clamp(30px,4.6vw,50px);margin:14px 0 16px}
   .sec-head p{color:var(--mut);font-size:18px;max-width:60ch}
@@ -878,7 +880,10 @@
       docEl.classList.remove('booting'); docEl.classList.add('introdone');
       if(boot) setTimeout(function(){ boot.remove(); }, 700);
     }
-    if(REDUCED){ done(); return; }
+    // Skip the boot intro when embedded (e.g. iframed inside aiforheratx.org) —
+    // embeds must render instantly and cheaply.
+    var EMBEDDED = false; try{ EMBEDDED = window.self !== window.top; }catch(e){ EMBEDDED = true; }
+    if(REDUCED || EMBEDDED){ done(); return; }
     var lines=['$ claude --init nonprofit.framework',
       '→ agents 8 · scheduler launchd · guards armed <span class="ok">✓</span>',
       '→ human-in-the-loop <span class="ok">ACTIVE</span>'];
